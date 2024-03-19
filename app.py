@@ -103,6 +103,15 @@ def register():
 @app.route("/login", methods=["GET", "POST"])
 def login():
 	form = LoginForm()
+	if form.validate_on_submit():
+		if (
+            form.email.data == "sara@gmail.com"
+            and form.password.data == "P@ssw0rd"
+        ):
+			flash("You have been logged in!", "success")
+			return redirect(url_for("home"))
+		else:
+			flash("Login Unsuccessful. Please check credentials", "danger")
 	return render_template('login.html', title="Login", form=form)
 
 
