@@ -82,7 +82,7 @@ courses = [
 @app.route("/")
 @app.route("/home")
 def home():
-	return render_template('home.html', lessons=lessons)
+	return render_template('home.html', lessons=lessons, courses=courses)
 
 
 @app.route("/about")
