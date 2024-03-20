@@ -3,7 +3,7 @@ starts a Flask web application
 """
 
 from flask import Flask, render_template, url_for, flash, redirect
-from flask_sqlachemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 from forms import RegistrationForm, LoginForm
 
@@ -135,12 +135,12 @@ class User(db.Model):
 class Lesson(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	title = db.Column(db.String(100), nullable=False)
-	date_posted = db.Column(db.Datetime, nullable=False, default=datetime.utcnow)
+	date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 	content = db.Column(db.Text, nullable=False)
 	thumbnail = db.Column(db.String(20), nullable=False, default='default_thumbnail.jpg')
 	slug = db.Column(db.String(32), nullable=False)
-	user_id = db.Column(db.Foreignkey, 'user.id', nullable=False)
-	course_id = db.Column(db.Foreignkey, 'course.id', nullable=False)
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+	course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
 
 	def __repr__(self):
 		return f"LESSON('{self.title}', '{self.date_posted}')"
