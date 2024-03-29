@@ -25,6 +25,10 @@ class User(db.Model, UserMixin):
 	bio = db.Column(db.Text, nullable=True)
 	lessons = db.relationship("Lesson", backref='author', lazy=True)
 
+	def __init__(self, **kwargs):
+		for key, value in kwargs.items():
+			setattr(self, key, value)
+
 	def __repr__(self):
 		"""String representation of User object"""
 		return f"USER('{self.fname}', '{self.lname}', '{self.username}', '{self.email}', '{self.image_file}')"
@@ -41,6 +45,10 @@ class Lesson(db.Model):
 	user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 	course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
 
+	def __init__(self, **kwargs):
+		for key, value in kwargs.items():
+			setattr(self, key, value)
+
 	def __repr__(self):
 		"""String representation of Lesson object"""
 		return f"LESSON('{self.title}', '{self.date_posted}')"
@@ -53,6 +61,10 @@ class Course(db.Model):
 	description = db.Column(db.String(150), nullable=False)
 	icon = db.Column(db.String(20), nullable=False, default="default_icon.jpg")
 	lessons = db.relationship("Lesson", backref="course_name", lazy=True)
+
+	def __init__(self, **kwargs):
+		for key, value in kwargs.items():
+			setattr(self, key, value)
 
 	def __repr__(self):
 		"""String representation of Course object"""

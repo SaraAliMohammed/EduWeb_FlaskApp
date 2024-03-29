@@ -62,7 +62,11 @@ def uploaded_files(filename):
 @app.route('/upload', methods=['POST'])
 def upload():
     f = request.files.get('upload')
-    extension = f.filename.split('.')[-1].lower()
+    extension = None
+    if f and f.filename:
+        extension = f.filename.split('.')[-1].lower()
+    else:
+        return upload_fail(message='No file uploaded!')
     if extension not in ['jpg', 'gif', 'png', 'jpeg']:
         return upload_fail(message='File extension not allowed!')
     random_hex = secrets.token_hex(8)
